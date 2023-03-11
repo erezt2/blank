@@ -1,0 +1,4 @@
+flip
+scale 4.5
+size 190 230
+move 0 -170

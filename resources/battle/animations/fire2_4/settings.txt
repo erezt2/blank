@@ -1,0 +1,5 @@
+scale 6
+align 1
+align_self 1
+move 0 40
+cut 35

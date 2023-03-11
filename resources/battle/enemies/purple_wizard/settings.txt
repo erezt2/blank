@@ -1,0 +1,4 @@
+flip
+scale 1.2
+size 100 105
+move -10 0
