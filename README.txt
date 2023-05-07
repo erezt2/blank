@@ -41,7 +41,7 @@ The menu has 7 sections:
 Inventory: a list of all the items you have. You can equip items from here on your character, and equip consumable items to use in battle.
 Equipment: a list of all the items you are equiping
 Stats: a list of the stats of your character. You can use LP (level points) to increase your stats after leveling up.
-Scrolls/ Scripts: a list of all the scrolls and scripts you can use. these function as a collection of attacks you can use in battle.
+Scrolls/ Scripts: a list of all the scrolls and scripts you can use. these function as a collection of attacks you can use in battle. Scrolls are more magic orianted, and the scripts are physical orianted.
 Misc: these are miscellaneous menus that are self explanatory by their names.
 
 The 'class' menu can be used to change your class, which can give you access to class actions in battle and to extra stat points.
@@ -54,10 +54,36 @@ there are two types of battles in this game.
 - encoutner battles: includes battles with random enemies or minibosses. These battles are turn orianted.
 - boss battles: battles with bosses. These are not turn orianted, you need to dodge while attacking, similar to undertail battles but you need to multitask dodging and using your skills.
 
-In both battles, you need to 
+In both battles, you have the same attack menu, in which there are 3 menus.
+1. attacks: includes normal attacks, and attacks from scripts and scrolls.
+2. inventory: includes items you equipped from the menu to be used in battle.
+3. class actions: attacks of the equipped class.
+
+In both battles you can press 'esc' and interact to give up.
+
+NOTICE: there are attacks with delay that is handled differently in both battle types.
 
 ##### encoutner battles
 
+In this kind of battle, there is a turn order that decides and show the order in which the turns are allocated. Each turn will give one action.
+
+![death slash](readme/gf1.gif)
+
+There are many types of attacks. Some are offensive, defensive, healing or supportive. You can chain many types of supportive attacks to try and hit the enemy with a high damage attack. Attack damage is calculated using the internal attributes of the attacks, the stats of the player, and the boosts they recieved and more (critical hits, etc).
+
+The attack above is the 'death slash' of the 'Samurai Teachings' script.
+
+Enemies can also use all types of skills, from boosting their attacks, increasing the amount of turns they have in one turn order, or hitting hard. 
+
+![enemy attack](readme/gf2.gif)
+
+![enemy attack](readme/gf3.png)
+
+##### boss battles
+
+In this battle, you will need to defeat the boss before you are defeated, or before the boss music ends. You will recover mana continuously, but you cannot spam attacks as there is an attack cooldown.
+
+![boss battle](readme/gf4.png)
 
 
 
