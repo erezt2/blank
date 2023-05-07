@@ -77,15 +77,59 @@ Enemies can also use all types of skills, from boosting their attacks, increasin
 
 ![enemy attack](readme/gf2.gif)
 
-![enemy attack](readme/gf3.png)
+![enemy attack](readme/gf3.gif)
 
 ##### boss battles
 
 In this battle, you will need to defeat the boss before you are defeated, or before the boss music ends. You will recover mana continuously, but you cannot spam attacks as there is an attack cooldown.
 
-![boss battle](readme/gf4.png)
+![boss battle](readme/gf4.gif)
 
+Be careful not to die!
 
+![death screen](readme/ss5.png)
+
+# Editors
+
+this project includes 4 types of editors: battle editors, cutscene generator, map editor and other editor
+
+in all types of editors, the resulting product will be saved inside the corrosponding file as a data structure in a variable. One of the other things I did and couldn't bother to change, as I didn't know what the pickle module was, and I didn't bother checking it since I focused on the idea of using printed python objects to save the products.
+
+All editors are used as a combination of the console and a visual element. after closing\ saving the product you are making, you need to add it to the corrosponding file as a variable (ex: map editor -> maps.py) before adding it to a dictionary, and then it will be avaiable for use instantly.
+
+All editors are highly unintuitive and rough around the edges (also rough in the center), but there is a very basic manual in the top of every file. Also, they will probably crash when you use it.
+
+### battle editor
+
+![battle editor](readme/gf5.gif)
+
+In this editor, you can create boss battles. encounter battles don't need an editor as its very easy to create them by hand.
+
+This editor can create projectiles, hitboxes, commands, effects and give custom attributes to all of them (as long as you manually write the functions to do so). there are other functionalities like randomness (very very badly written), and a queue + objects saves.
+
+### map editor
+
+![map editor](readme/gf6.gif)
+
+In this editor you can easily create maps and insert them into the game. this editor can place texture, hitboxses, interactive textboxes, sprites, passages to different maps and more into a map.
+
+### cutscene editor
+
+![cutscene editor](readme/gf7.gif)
+
+This editor is the hardest one to use, as unlike the previous 2 editors, once you compile a project you CANNOT reuse relaunch the editor and use it again. as such.
+
+You can use it to create cutscenes that will play in the game - these cutscenes are moderately difficult to be created in this editor, and even a short cutscene can take a considerable amount of time.
+
+(if you use this editor, make sure to press Z\X to submit changes to be able to see them) 
+
+There is also a support editor for this editor, called image_checker.py, which helps get the exact rect number for hitboxes.
+
+### other editor
+
+![other editor](readme/ss6.png)
+
+This editor is mostly usless, as its a single editor for multiple other features that can be manually created by hand instead of using an editor. but its still there for some level of inconvinience as it can save some headache.
 
 ## Project details (old readme)
 
@@ -113,5 +157,4 @@ or inside the game
 to start run init.py
 
 notes:
-if you decide to check the editors/ generators, check the MAP_GENERATOR only AFTER you have graded my work, since it
-automatically edits resource files when you close it, and may ruin some maps if you are not familiar with it 
+if you decide to check the editors/ generators, check the MAP_GENERATOR only after you make sure save_image is set to false, since it automatically edits resource files when you close it if its true, and may ruin some maps if you are not familiar with it 
