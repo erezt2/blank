@@ -12,13 +12,13 @@ The game is a RPG genred game. There are the expected systems for such a genre o
 
 From the main menu you can choose to load your save or to create a new game, alongside changing the settings.
 
-##### navigation
+#### navigation
 
 ![World Travel](readme/ss2.png)
 
 The game uses block textures as the building block of the map, for convinience for building more maps using the map creation tool. All textures were stolen from minecraft texturepacks + itch.io, and most music was stolen from Octopath Traveler.
 
-##### functionality
+#### functionality
 
 ![interactions](readme/ss3.png)
 
@@ -28,7 +28,7 @@ There are 12 default key inputs: esc for menu exit, tab for menu selection, wasd
 
 all keybinds aside from esc and tab can be changed in the settings alongside volume, autosaves and more.
 
-##### menu
+#### menu
 
 ![menu](readme/ss4.png)
 
@@ -48,7 +48,7 @@ The 'class' menu can be used to change your class, which can give you access to 
 
 The 'journal' menu can be used to get hints for quests or accept quest rewards.
 
-#### battle
+##### battle
 
 there are two types of battles in this game.
 - encoutner battles: includes battles with random enemies or minibosses. These battles are turn orianted.
@@ -63,7 +63,7 @@ In both battles you can press 'esc' and interact to give up.
 
 NOTICE: there are attacks with delay that is handled differently in both battle types.
 
-##### encoutner battles
+#### encoutner battles
 
 In this kind of battle, there is a turn order that decides and show the order in which the turns are allocated. Each turn will give one action.
 
@@ -79,7 +79,7 @@ Enemies can also use all types of skills, from boosting their attacks, increasin
 
 ![enemy attack](readme/gf3.gif)
 
-##### boss battles
+#### boss battles
 
 In this battle, you will need to defeat the boss before you are defeated, or before the boss music ends. You will recover mana continuously, but you cannot spam attacks as there is an attack cooldown.
 
