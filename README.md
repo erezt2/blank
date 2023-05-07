@@ -157,4 +157,5 @@ or inside the game
 to start run init.py
 
 notes:
-if you decide to check the editors/ generators, check the MAP_GENERATOR only after you make sure save_image is set to false, since it automatically edits resource files when you close it if its true, and may ruin some maps if you are not familiar with it 
+if you decide to check the editors/ generators, check the MAP_GENERATOR only after you make sure save_image is set to false, since it automatically edits resource files when you close it if its true, and may ruin some maps if you are not familiar with it
+This project was only  added to github around 2022, and then I duplicated the branch to avoid all the "questionable" commit names, but this project was started back in 2020. of course I didn't work on it for 3 years straight, only on and off.
