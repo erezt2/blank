@@ -12,13 +12,13 @@ The game is a RPG genred game. There are the expected systems for such a genre o
 
 From the main menu you can choose to load your save or to create a new game, alongside changing the settings.
 
-#### navigation
+### navigation
 
 ![World Travel](readme/ss2.png)
 
 The game uses block textures as the building block of the map, for convinience for building more maps using the map creation tool. All textures were stolen from minecraft texturepacks + itch.io, and most music was stolen from Octopath Traveler.
 
-#### functionality
+### functionality
 
 ![interactions](readme/ss3.png)
 
@@ -48,7 +48,7 @@ The 'class' menu can be used to change your class, which can give you access to 
 
 The 'journal' menu can be used to get hints for quests or accept quest rewards.
 
-##### battle
+### battle
 
 there are two types of battles in this game.
 - encoutner battles: includes battles with random enemies or minibosses. These battles are turn orianted.
