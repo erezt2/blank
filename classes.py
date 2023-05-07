@@ -564,7 +564,7 @@ class Player:
 
 class Screen:
     if True:
-        debug = True
+        debug = False
 
         run = True
         runState = ""

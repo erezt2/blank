@@ -4,6 +4,7 @@ import textures
 import maps
 from classes import render_map_blocks
 
+save_image = False
 """
 manual:
   a - print info
@@ -533,7 +534,8 @@ try:
                                         win.blit(displayed_map[0][h][w][i], (w * 64, h * 64))
                         rect = pygame.Rect(0, 0, 64*x, 64*y)
                         sub = win.subsurface(rect)
-                        pygame.image.save(sub, "resources/maps/m_"+map_name+".png")
+                        if save_image:
+                            pygame.image.save(sub, "resources/maps/m_"+map_name+".png")
                         win = pygame.display.set_mode((64 * screen_width + 20, 64 * screen_height), 0, 32)
 
                     elif event.key == pygame.K_c:
@@ -819,7 +821,8 @@ for i in range(2):
 
 rect = pygame.Rect(0, 0, 64*x, 64*y)
 sub = win.subsurface(rect)
-pygame.image.save(sub, "resources/maps/m_"+map_name+".png")
+if save_image:
+    pygame.image.save(sub, "resources/maps/m_"+map_name+".png")
 print("{5} = [{0}, {1}, {2}, {3}, {4}, {6}]".format(str(copyable[0]).replace("'", ""), str(copyable[1]), str(copyable[2]), str(copyable[3]).replace("'", ""), str(temp_list), "m_"+map_name, str(copyable[5])))
 
 pygame.quit()
