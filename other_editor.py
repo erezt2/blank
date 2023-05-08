@@ -1,6 +1,69 @@
 import pygame
 from pygame.compat import as_bytes, as_unicode
-from data import keysList, mouseDown, keysDown, mouseHeld, keysHeld, mouseUp, keysUp
+from data import mouseDown, mouseHeld, mouseUp
+
+keysList = {
+    "a": pygame.K_a,
+    "b": pygame.K_b,
+    "c": pygame.K_c,
+    "d": pygame.K_d,
+    "e": pygame.K_e,
+    "f": pygame.K_f,
+    "g": pygame.K_g,
+    "h": pygame.K_h,
+    "i": pygame.K_i,
+    "j": pygame.K_j,
+    "k": pygame.K_k,
+    "l": pygame.K_l,
+    "m": pygame.K_m,
+    "n": pygame.K_n,
+    "o": pygame.K_o,
+    "p": pygame.K_p,
+    "q": pygame.K_q,
+    "r": pygame.K_r,
+    "s": pygame.K_s,
+    "t": pygame.K_t,
+    "u": pygame.K_u,
+    "v": pygame.K_v,
+    "w": pygame.K_w,
+    "x": pygame.K_x,
+    "y": pygame.K_y,
+    "z": pygame.K_z,
+    " ": pygame.K_SPACE,
+    "1": pygame.K_1,
+    "2": pygame.K_2,
+    "3": pygame.K_3,
+    "4": pygame.K_4,
+    "5": pygame.K_5,
+    "6": pygame.K_6,
+    "7": pygame.K_7,
+    "8": pygame.K_8,
+    "9": pygame.K_9,
+    "0": pygame.K_0,
+    "up": pygame.K_UP,
+    "right": pygame.K_RIGHT,
+    "down": pygame.K_DOWN,
+    "left": pygame.K_LEFT,
+    "ctrl": pygame.K_LCTRL,
+    "esc": pygame.K_ESCAPE,
+    "tab": pygame.K_TAB,
+    "+": pygame.K_KP_PLUS,
+    "-": pygame.K_KP_MINUS,
+    ":": pygame.K_SEMICOLON,
+    "del": pygame.K_DELETE,
+    "\'": pygame.K_QUOTE,
+    ".": pygame.K_PERIOD,
+    ",": pygame.K_COMMA,
+    "?": pygame.K_SLASH,
+    "_": pygame.K_MINUS,
+    "NP_enter": pygame.K_KP_ENTER,
+    "enter": pygame.K_RETURN,
+    "\b": pygame.K_BACKSPACE,
+}
+keysDown = {key: False for key in keysList}
+keysHeld = {key: False for key in keysList}
+keysUp = {key: False for key in keysList}
+
 """
 MANUAL:
 
@@ -116,6 +179,7 @@ def win_size(width, height):
 
 current(content)
 pygame.scrap.init()
+pygame.init()
 run = True
 while run:
     dt = 1000 / clock.tick(30)
@@ -375,7 +439,6 @@ while run:
                     index = -1
                     typeBar2 = ""
                     typeBar1 = up_down_content[up_down_index]
-
             elif i == "\b":
                 typeBar1 = typeBar1[:-1]
                 maxIndex -= 1

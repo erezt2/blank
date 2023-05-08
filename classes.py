@@ -3751,6 +3751,7 @@ if True:
         def remove_reload_func(self, name, count):
             c = 0
             for index in range(len(self.run_on_reload)):
+                index -= c
                 if isinstance(self.run_on_reload[index], list):
                     func = self.run_on_reload[index][0]
                 else:
