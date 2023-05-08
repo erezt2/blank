@@ -103,7 +103,7 @@ All editors are used as a combination of the console and a visual element. after
 
 All editors are highly unintuitive and rough around the edges (also rough in the center), but there is a very basic manual in the top of every file\*. Also, they will probably crash when you use it.
 
-\* The manual exists but you will probably need to check the code along it if you actually intent to create something.
+\* The manual exists but you will probably need to check the code along it if you actually have intent to create something.
 
 ### battle editor
 
