@@ -3204,10 +3204,17 @@ if True:
         level_diff = attacker - attacked
         return level_diff / (15 + abs(level_diff)) + 1
 
-    def player_atk_amp(weapon):
+    def player_atk_amp(attack_list, enemy):
         mul = 1
-        if weapon == 1 and Ins.player.playerClass == 1:
+        if attack_list[6] == 1 and Ins.player.playerClass == 1:
             mul += 0.2
+        elif Ins.player.playerClass == 2:
+            if enemy == Battle:
+                ehp = Battle.enemy_hp
+            else:
+                ehp = enemy.hp
+            if ehp > Ins.player.hp:
+                mul += 1-Ins.player.hp/ehp
         mul += Ins.player.atk_boost
         return mul
 
@@ -4321,8 +4328,8 @@ if True:
 
         # trn_hit - turns battle hit
         if True:
-            def trn_hit_samurai_apple(self, hit, last_hp):
-                if self.hp > 0:
+            def trn_hit_samurai_apple(self, hit, last_hp, attack_list):
+                if 0 < self.hp < last_hp or (self.hp == last_hp and attack_list[3][0] > 0):
                     Ins.player.hp = -1000
 
         # trn_atk - turn battle attack
@@ -4338,7 +4345,7 @@ if True:
                 if Turns.turn_count == 6 or (Turns.turn_count >= 8 and Turns.turn_count % 7 == 0):
                     self.next_attacks.append("bigFlurry")
                     animation("3", "something big is going to happen next turn...", (255, 255, 255), 100, duration=60, layer=400)
-        # trn_atk_res - turns attack restraint
+        # trn_atk_res - turns attack restrainta
         if True:
             def trn_atk_res_berserker(self, atk):
                 if atk == "heal1" and self.hp >= self.max_hp * 0.85:

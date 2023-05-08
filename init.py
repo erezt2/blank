@@ -1688,7 +1688,7 @@ def main():
                                 _temp_attack_uniform = random.uniform(_attack_list[3][3][0], _attack_list[3][3][1])
                                 _temp_heal_uniform = random.uniform(_attack_list[3][4][0], _attack_list[3][4][1])
                                 _temp_damage = _temp_attack_uniform * _temp_critical * (_weapon_boost + 1) \
-                                                * lvl_amp_func(Ins.player.level, Battle.enemy_list[4][5], _attack_list[8]) * player_atk_amp(_attack_list[6])\
+                                                * lvl_amp_func(Ins.player.level, Battle.enemy_list[4][5], _attack_list[8]) * player_atk_amp(_attack_list, Battle)\
                                                * atk_amp_func(Ins.player.attack, Battle.enemy_list[4][2], _attack_list[8]) * _attack_list[3][0]
 
                                 # elif _attack_list[8] == 1:
@@ -2666,7 +2666,7 @@ def main():
                                 _temp_attack_uniform = random.uniform(_attack_list[3][3][0], _attack_list[3][3][1])
 
                                 _temp_damage = _temp_attack_uniform * _temp_critical \
-                                               * lvl_amp_func(Ins.player.level, enemy.level, _attack_list[8]) * player_atk_amp(_attack_list[6])\
+                                               * lvl_amp_func(Ins.player.level, enemy.level, _attack_list[8]) * player_atk_amp(_attack_list, enemy)\
                                                * (_weapon_boost + 1) * atk_amp_func(Ins.player.attack, enemy.defense, _attack_list[8]) * _attack_list[3][0]
                                 # elif _attack_list[8] == 1:
                                 # _temp_damage *= 1
@@ -2731,7 +2731,7 @@ def main():
                             except KeyError:
                                 pass
                             try:
-                                globals()["trn_hit_" + enemy.enemy_id](enemy, hit, temp_hp)
+                                globals()["trn_hit_" + enemy.enemy_id](enemy, hit, temp_hp, _attack_list)
                             except KeyError:
                                 pass
 
