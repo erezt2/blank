@@ -123,7 +123,7 @@ se_list.sort()
 set_song_delay = {"none": 0, "song1": 0.5, "song2": 1, "song3": 1, "death_song": 0.7, "winning_song": 0.6, "menu": 0.5,
                   "shop1": 0.3, "forest1": 1.1, "palace1": 1.1, "battle2": 0, "battle3": 0.2, "battle1": 0, "river1": 1.1,
                   "capital1": 1.1, "battle4": 0.4, "spludit1": 0.55, "spludit2": 1.1, "ocean": 1.1, "spongebob": 0.35,
-                  "apple": 0, "battle5": 0.4}
+                  "apple": 0, "battle5": 0.4, "sage":0}
 song_delay = {i: 0 for i in set_song_delay}
 song_length = {i: get_song_len(i) - set_song_delay[i] for i in set_song_delay}
 
@@ -145,7 +145,7 @@ set_music_volume(40)  # 0.5
 if __name__ == "__main__":
     win = pygame.display.set_mode((256, 64))
     clock = pygame.time.Clock()
-    test_song1 = "battle5"  # input("song: ")
+    test_song1 = "sage"  # input("song: ")
     test_song2 = "song2"  # input("song: ")
     run = True
     while run:
@@ -162,7 +162,7 @@ if __name__ == "__main__":
                 if event.key == pygame.K_a:
                     play(test_song1, resume=True)
                 if event.key == pygame.K_s:
-                    play(test_song1, resume=False, delay_ms=50000)
+                    play(test_song1, resume=False, delay_ms=4350//30*1000)
                 if event.key == pygame.K_d:
                     play(test_song1, resume=False)
                 if event.key == pygame.K_f:

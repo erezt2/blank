@@ -1570,8 +1570,9 @@ def main():
                 hitbox_rect = pygame.Rect(int(_hitbox.x + 305), int(_hitbox.y + 305), _hitbox.width, _hitbox.height)
                 if not hitbox_rect.colliderect(pygame.Rect(250, 250, 700, 500)):
                     _hitbox.__class__.hitbox_list.pop(_hitbox.__class__.hitbox_list.index(_hitbox))
+            bound = Polygon([(250, 250), (950, 250), (950, 750), (250, 750)])
             for _projectile in Battle.Projectile.projectile_list:
-                if not Polygon.intersects(Polygon(_projectile.hitbox), Polygon([(250, 250), (950, 250), (950, 750), (250, 750)])):
+                if not Polygon.intersects(Polygon(_projectile.hitbox), bound):
                     _projectile.deleted()
                     _projectile.__class__.projectile_list.remove(_projectile)
             Battle.read_frame()
@@ -3053,13 +3054,15 @@ def main():
             if keysDown["b"]:
                 Ins.stats.monsters_killed += 1
             if keysDown["o"]:
-                start_battle(1)
+                start_battle(2)
             if keysDown["p"]:
                 start_turns("test")
             if keysDown["y"]:
                 print(Battle.Sprite.x, Battle.Sprite.y)
             if keysDown["h"]:
                 start_cut_scene("aa")
+            if keysHeld["right"]:
+                Battle.current_battle_frame = 1600
 
         Animation.render_ff()
         if not Particles.rendered:

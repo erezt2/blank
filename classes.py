@@ -564,7 +564,7 @@ class Player:
 
 class Screen:
     if True:
-        debug = False
+        debug = True
 
         run = True
         runState = ""
@@ -1319,11 +1319,14 @@ class Battle:
         def effect_ff(cls):
             cls.current_effect_length -= 1
             if cls.current_effect in (1, 2):
-                Ins.player.add_hp(-1 * cls.current_effect_damage * (Battle.enemy_list[4][5] / 66 + 0.75) * random.uniform(cls.random_multiplier[0], cls.random_multiplier[1]) / (Ins.player.defense + 1))
+                Ins.player.add_hp(-1 * cls.current_effect_damage * (Battle.enemy_list[4][5] / 66 + 0.75) *
+                                  random.uniform(cls.random_multiplier[0], cls.random_multiplier[1]) / (Ins.player.defense + 1))
             if cls.current_effect in (3, 4):
-                Ins.player.add_hp(-1 * cls.current_effect_damage * (Battle.enemy_list[4][5] / 66 + 0.75) * random.uniform(cls.random_multiplier[0], cls.random_multiplier[1]) / (Ins.player.defense + 1) * Battle.enemy_list[4][1])
+                Ins.player.add_hp(-1 * cls.current_effect_damage * (Battle.enemy_list[4][5] / 66 + 0.75) *
+                                  random.uniform(cls.random_multiplier[0], cls.random_multiplier[1]) / (Ins.player.defense + 1) * Battle.enemy_list[4][1])
             if cls.current_effect in (5, 6):
-                Ins.player.add_hp(-1 * cls.current_effect_damage * (Battle.enemy_list[4][5] / 66 + 0.75) * random.uniform(cls.random_multiplier[0], cls.random_multiplier[1]))
+                Ins.player.add_hp(-1 * cls.current_effect_damage * (Battle.enemy_list[4][5] / 66 + 0.75) *
+                                  random.uniform(cls.random_multiplier[0], cls.random_multiplier[1]))
             if Ins.player.hp <= 0 and cls.current_effect in (1, 3, 5):
                 Ins.player.hp = 1
             if cls.current_effect_length <= 0:
@@ -1424,7 +1427,7 @@ class Battle:
         projectile_list = []
         player_rect = None
 
-        def __init__(self, x, y, width, height, degree, velocity, projectile_stats, image="", max_time=-1, attack_modifier=1, accuracy_modifier=0.05,
+        def __init__(self, x, y, width, height, degree, velocity, projectile_stats, image="", max_time=-1, attack_modifier=1.0, accuracy_modifier=0.05,
                      random_multiplier=(0.98, 1.02), effects=("none", "none", "none", "none"), color=(255, 255, 255), spinning=(0.0, 0.0, 0.0, 0.0, 0.0), radian_offset=False):
             self.x = x  # 4 basic rect parameters
             self.y = y
@@ -1450,7 +1453,6 @@ class Battle:
             self._hit = effects[3]
 
             # rendering and position info
-            self.hitbox = []
             if image == "":
                 self.image = ""  # no texture (rect)
                 self.color = color  # color
@@ -1458,6 +1460,7 @@ class Battle:
             else:
                 self.image = textures.projectiles_list[image].convert_alpha()  # texture
                 self.hitbox_rotate = spinning[4]  # rotate hitbox (texture doesnt always align with hitbox)
+
             self.__class__.projectile_list.append(self)
             self.max_frames = max_time  # life span
             self.frames = 0
@@ -1466,21 +1469,13 @@ class Battle:
             self.spinning_y_offset = spinning[2]
             self.radian_offset = radian_offset  # (radian or cartesian)
             self.spinning_dot_rotation = spinning[3]  # rotation angle from pos with offset relative to x,y
+            self.info = {}
+            self.hitbox = self.blit()
 
             self.created()  # run first func
 
-        def render_ff(self):
-            if Battle.running_battle:
-                self.y += self.velocity * math.sin(self.degree)
-                self.x += self.velocity * math.cos(self.degree)
-
+        def blit(self, display=True):
             temp_offset = (self.spinning_x_offset * math.cos(self.spinning_y_offset), self.spinning_x_offset * math.sin(self.spinning_y_offset)) if self.radian_offset else (self.spinning_x_offset, self.spinning_y_offset)
-            # self.hitbox = []
-            # rect_radius = math.sqrt(self.height ** 2 + self.width ** 2) / 2
-            # try:
-            #     rect_angle = math.atan(self.height / self.width)
-            # except ZeroDivisionError:
-            #     rect_angle = PI / 2
             if self.image == "":
                 # if self.rotation % (2*PI) == 0 and self.spinning_dot_rotation % (2*PI) == 0:
                 #     pygame.draw.rect(Screen.win, self.color, (int(self.x + temp_offset[0] - self.width / 2 + 305), int(self.y + temp_offset[1] - self.height / 2 + 305), self.width, self.height))
@@ -1497,7 +1492,7 @@ class Battle:
                 #         temp2_radius = math.sqrt(rect_radius**2+temp_offset[1]**2+temp_offset[0]**2+2*rect_radius*(temp_offset[0]*math.cos(temp_angle)+temp_offset[1]*math.sin(temp_angle)))
                 #         self.hitbox.append((int(305 + self.x + math.cos(temp2_angle)*temp2_radius), int(305 + self.y + math.sin(temp2_angle)*temp2_radius)))
                 #     pygame.draw.polygon(Screen.win, self.color, self.hitbox)
-                self.hitbox = blit_rotated_rect(self.x + 305, self.y + 305, self.width, self.height, self.color, self.rect_width, self.rotation, temp_offset, self.spinning_dot_rotation)
+                hitbox = blit_rotated_rect(self.x + 305, self.y + 305, self.width, self.height, self.color, self.rect_width, self.rotation, temp_offset, self.spinning_dot_rotation, display=display)
             else:
                 # if self.rotation % (2 * PI) == 0 and self.spinning_dot_rotation % (2*PI) == 0 and self.hitbox_rotate % (2 * PI) == 0:
                 #     Screen.win.blit(self.image, (int(self.x + temp_offset[0] + 305 - self.image.get_rect().width / 2), int(self.y + temp_offset[1] + 305 - self.image.get_rect().height / 2)))
@@ -1513,7 +1508,22 @@ class Battle:
                 #         self.hitbox.append((int(305 + self.x + math.cos(temp2_angle)*temp2_radius), int(305 + self.y + math.sin(temp2_angle)*temp2_radius)))
                 # if console_active_list["show hitbox"] == 1:
                 #     pygame.draw.polygon(Screen.win, (255, 255, 255), self.hitbox, 1)
-                self.hitbox = blit_rotated_texture(self.image, self.x + 305, self.y + 305, self.width, self.height, self.rotation, temp_offset, self.spinning_dot_rotation, self.hitbox_rotate)
+                hitbox = blit_rotated_texture(self.image, self.x + 305, self.y + 305, self.width, self.height, self.rotation, temp_offset, self.spinning_dot_rotation, self.hitbox_rotate, display=display)
+            return hitbox
+
+        def render_ff(self):
+            if Battle.running_battle:
+                self.y += self.velocity * math.sin(self.degree)
+                self.x += self.velocity * math.cos(self.degree)
+
+            # self.hitbox = []
+            # rect_radius = math.sqrt(self.height ** 2 + self.width ** 2) / 2
+            # try:
+            #     rect_angle = math.atan(self.height / self.width)
+            # except ZeroDivisionError:
+            #     rect_angle = PI / 2
+
+            self.hitbox = self.blit()
 
             if (not Battle.Sprite.is_moving and self.projectile_application == 1) or (Battle.Sprite.is_moving and self.projectile_application == 2) or self.projectile_application == 3:
                 pass
@@ -1742,10 +1752,7 @@ class Battle:
 
     @staticmethod
     def add_to_frame(key, value):
-        try:
-            if Battle.selected_battle[key]:
-                pass
-        except KeyError:
+        if key not in Battle.selected_battle:
             Battle.selected_battle[key] = value
         else:
             if isinstance(Battle.selected_battle[key], tuple):
@@ -3258,7 +3265,7 @@ if True:
 
 # rendering methods
 if True:
-    def blit_rotated_rect(x, y, w, h, color, width=0.0, rot=0.0, point=(0, 0), point_rot=0.0):
+    def blit_rotated_rect(x, y, w, h, color, width=0.0, rot=0.0, point=(0, 0), point_rot=0.0, display=True):
 
         rect_radius = math.sqrt(h ** 2 + w ** 2) / 2
         try:
@@ -3268,8 +3275,9 @@ if True:
         hitbox = []
 
         if rot % (2 * PI) == 0 and point_rot % (2 * PI) == 0:
-            pygame.draw.rect(Screen.win, color, (round(x + point[0] - w / 2), round(y + point[1] - h / 2), w, h), round(width))
-            hitbox = [(round(x + point[0] - w / 2 + 305),
+            if display:
+                pygame.draw.rect(Screen.win, color, (round(x + point[0] - w / 2), round(y + point[1] - h / 2), w, h), round(width))
+            hitbox = [(round(x + point[0] - w / 2),
                             round(y + point[1] - h / 2)), (
                            round(x + point[0] + w / 2),
                            round(y + point[1] - h / 2)), (
@@ -3282,7 +3290,8 @@ if True:
                 temp_angle = (1 if dot % 2 == 0 else -1) * rect_angle + (PI if dot in (0, 3) else 0) + rot
                 hitbox.append((round(point[0] + x + rect_radius * math.cos(temp_angle)),
                                     round(point[1] + y + rect_radius * math.sin(temp_angle))))
-            pygame.draw.polygon(Screen.win, color, hitbox, round(width))
+            if display:
+                pygame.draw.polygon(Screen.win, color, hitbox, round(width))
         else:
             for dot in range(4):
                 temp_angle = (1 if dot % 2 == 0 else -1) * rect_angle + (PI if dot in (0, 3) else 0) + rot
@@ -3293,11 +3302,15 @@ if True:
                                 point[0] * math.cos(temp_angle) + point[1] * math.sin(temp_angle)))
                 hitbox.append((round(x + math.cos(temp2_angle) * temp2_radius),
                                     round(y + math.sin(temp2_angle) * temp2_radius)))
-            pygame.draw.polygon(Screen.win, color, hitbox, round(width))
+            if display:
+                pygame.draw.polygon(Screen.win, color, hitbox, round(width))
 
+        if console_active_list["show hitbox"] == 1:
+            if display:
+                pygame.draw.polygon(Screen.win, (255, 255, 255), hitbox, 1)
         return hitbox
 
-    def blit_rotated_texture(image, x, y, w=None, h=None, rot=0.0, point=(0, 0), point_rot=0.0, hitbox_rot=0.0):  # hitbox rot usless for only blitting purposes
+    def blit_rotated_texture(image, x, y, w=None, h=None, rot=0.0, point=(0, 0), point_rot=0.0, hitbox_rot=0.0,  display=True):  # hitbox rot usless for only blitting purposes
         if w is None:
             w = image.get_width()
         if h is None:
@@ -3310,7 +3323,8 @@ if True:
         hitbox = []
 
         if rot % (2 * PI) == 0 and point_rot % (2 * PI) == 0 and hitbox_rot % (2 * PI) == 0:
-            Screen.win.blit(image, (round(x + point[0] - image.get_rect().width / 2), round(y + point[1] - image.get_rect().height / 2)))
+            if display:
+                Screen.win.blit(image, (round(x + point[0] - image.get_rect().width / 2), round(y + point[1] - image.get_rect().height / 2)))
             hitbox = [(round(x + point[0] - w / 2),
                             round(y + point[1] - h / 2)), (
                            round(x + point[0] + w / 2),
@@ -3324,7 +3338,8 @@ if True:
             new_rect = rotated_image.get_rect(center=image.get_rect(center=(
                 round(x + math.sqrt(point[0] ** 2 + point[1] ** 2) * math.cos(math.atan2(point[1], point[0]) + point_rot)),
                 round(y + math.sqrt(point[0] ** 2 + point[1] ** 2) * math.sin(math.atan2(point[1], point[0]) + point_rot)))).center)
-            Screen.win.blit(rotated_image, (round(new_rect.topleft[0]), round(new_rect.topleft[1])))
+            if display:
+                Screen.win.blit(rotated_image, (round(new_rect.topleft[0]), round(new_rect.topleft[1])))
             for dot in range(4):
                 temp_angle = (1 if dot % 2 == 0 else -1) * rect_angle + (PI if dot in (0, 3) else 0) + rot + hitbox_rot
                 temp2_angle = math.atan2(rect_radius * math.sin(temp_angle) + point[1], rect_radius * math.cos(temp_angle) + point[0]) + point_rot
@@ -3334,7 +3349,8 @@ if True:
                 hitbox.append((round(x + math.cos(temp2_angle) * temp2_radius),
                                     round(y + math.sin(temp2_angle) * temp2_radius)))
         if console_active_list["show hitbox"] == 1:
-            pygame.draw.polygon(Screen.win, (255, 255, 255), hitbox, 1)
+            if display:
+                pygame.draw.polygon(Screen.win, (255, 255, 255), hitbox, 1)
 
         return hitbox
 
@@ -4052,9 +4068,17 @@ if True:
                     self.degree *= -1
                 self.degree %= 2 * PI
 
+            def pre_rotate60(self):
+                self.rotation = PI / 60 * (self.frames+1)
+
+            def pre_shrink8(self):
+                self.width += 100 / 8
+                self.height += 100 / 8
+
         # prd - projectile deleted
         if True:
-            pass
+            def prd_spawn_rotate60(self):
+                Battle.Projectile(self.x, self.y, 100, 100, 0, 0, [1, 5, 0, 5.0, 6, 0], '', 30, 0.25, 0.9, [0.9, 1.0], ['none', 'rotate60', 'none', 'none'], [140, 127, 172])
 
         # prh - projectile hit
         if True:

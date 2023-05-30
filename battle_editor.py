@@ -362,9 +362,25 @@ random_commands3 = []
 queue = {}
 
 ## insert here
+# [-21, 111, 18, 284, 0.0, 8, [0, 0, 0, 0.0, 0, 0], '', -1, 3.3, 1.0, [0.95, 1.3], ['none', 'none', 'none', 'none'], [255, 0, 0], [0, 0, 0, 0, 0], False]
+projectiles = [[-21, 111, 18, 284, 0.0, 8, [0, 0, 0, 0.0, 0, 0], '', -1, 3.3, 1.0, [0.95, 1.3], ['none', 'none', 'none', 'none'], [255, 0, 0], [0, 0, 0, 0, 0], False], [458, 407, 280, 18, -1.546410917622178, 8, [0, 0, 0, 0.0, 0, 0], '', -1, 3.3, 1.0, [0.95, 1.3], ['none', 'none', 'none', 'none'], [255, 0, 0], [0, 0, 0, 0, 0], False]]
 
-projectiles = [[295, 195, 90, 128, 0, 0, [0, 0, 0, 0.0, 0, 0], 'sponge2', -1, 2.2, 0.0, [1.0, 1.0], ['none', 'none', 'none', 'none'], [255, 255, 255], [0, 0, 0, 0, 0], False], [566, 264, 90, 128, 0, 0, [1, 0, 0, 0.0, 0, 0], 'sponge2', -1, 0.4, 0.0, [0.9, 1.1], ['none', 'bounce_mid', 'none', 'none'], [255, 255, 255], [0, 0, 0, 0, 0], False], [-49, 362, 94, 98, 0.0, 14, [0, 0, 0, 0.0, 0, 0], 'sponge1', -1, 2.5, 0.1, [0.8, 1.0], ['none', 'none', 'none', 'none'], [255, 255, 255], [0, 0, 0, 0, 0], False]]
-hitboxes = [[-229, 59, 220, 22, 0.0, 14, -1, False, ['none', 'none'], None], [-228, 278, 220, 22, 0.0, 14, -1, False, ['none', 'none'], None]]
+hitboxes = \
+    []
+
+def left_click_create(mouse_pos):
+    pos = list(mouse_pos)
+    current_addition_list = pos + [0, 0, 0, 0, [1, 0, 3, 0.0, 0, 0], '', 8, 0.0, 0.0, [0.0, 0.0],
+     ['none', 'shrink8', 'spawn_rotate60', 'none'], [255, 0, 0], [0, 0, 0, 0, 0], False]
+    temp = Battle.running_battle
+    Battle.running_battle = True
+    ####
+    Battle.Projectile(*current_addition_list)
+    main_add_to_frame(Battle.current_battle_frame, ["projectile", *current_addition_list])
+    ####
+    if not temp:
+        Battle.running_battle = False
+
 
 ##
 
@@ -415,7 +431,7 @@ elif convert_bool(input("new: ")):
         b_skip_start = int(input("song_start_delay: "))
         b_skip_end = int(input("song_end_delay: "))
         b_texture_name = input("texture name: ")
-        b_background = input("texture name: ")
+        b_background = input("background texture name: ")
         b_hp = int(input("foe's hp: "))
         b_attack = int(input("foe's attack: "))
         b_defense = int(input("foe's defense: "))
@@ -438,7 +454,7 @@ else:
     b_skip_start = battle.enemies_list[enemy_battle_id][3][0]
     b_skip_end = battle.enemies_list[enemy_battle_id][3][1]
     b_texture_name = input("texture name: ")
-    b_background = input("texture name: ")
+    b_background = input("background texture name: ")
     b_hp = battle.enemies_list[enemy_battle_id][5][0]
     b_attack = battle.enemies_list[enemy_battle_id][5][1]
     b_defense = battle.enemies_list[enemy_battle_id][5][2]
@@ -465,24 +481,31 @@ last_click = (0, 0)
 run = True
 Battle.running_battle = False
 try:
+    Battle.init_battle(main_battle_dict)
+    Battle.current_battle_frame = -1
+    Battle.Hitbox.hitbox_list = []
+    Battle.Projectile.projectile_list = []
+    proceed_frame()
     while run:
-        if Game.delta < 1:
-            Game.current_time = time.time()
-            Game.delta += (Game.current_time - Game.last_time) * Game.ticks_per_second
-            Game.last_time = float(Game.current_time)
-        if time.time() - Game.time_start > 1:
-            Game.time_start += 1
-            # print(Game.frame)
-            Game.frame = 0
-
-        if Game.delta > 5:
-            Game.delta = 5
-        if Game.delta < 1:
-            continue
-        else:
-            Game.delta -= 1
-            Game.frames += 1
-            Game.frame += 1
+        # if Game.delta < 1:
+        #     Game.current_time = time.time()
+        #     Game.delta += (Game.current_time - Game.last_time) * Game.ticks_per_second
+        #     Game.last_time = float(Game.current_time)
+        # if time.time() - Game.time_start > 1:
+        #     Game.time_start += 1
+        #     # print(Game.frame)
+        #     Game.frame = 0
+        #
+        # if Game.delta > 5:
+        #     Game.delta = 5
+        # if Game.delta < 1:
+        #     continue
+        # else:
+        #     Game.delta -= 1
+        #     Game.frames += 1
+        #     Game.frame += 1
+        clock.tick(30)
+        Game.frame += 1
         win.fill((0, 0, 0))
         if True:
             for reset_key in mouseDown:
@@ -600,7 +623,7 @@ try:
             Battle.running_battle = not Battle.running_battle
             if Battle.running_battle:
                 try:
-                    sounds.play(b_song, False, delay_ms=(Battle.current_battle_frame + b_skip_start) / 27.3*1000, loops=1)
+                    sounds.play(b_song, False, delay_ms=(Battle.current_battle_frame + b_skip_start) / 27.3*1000, loops=1) # 27.3
                 except error.SoundError:
                     pass
             else:
@@ -714,23 +737,28 @@ try:
                                 current_addition_list[14][3] *= 4 / PI
                                 current_addition_list[14][3] = int(round(current_addition_list[14][3]))
                                 current_addition_list[14][3] *= PI / 4
-                    elif current_addition_state == 6:
-                        current_addition_list[13] = [int(input("red: ")), int(input("green: ")), int(input("blue: "))]
-                    elif current_addition_state == 7:
-                        current_addition_list[7] = input("texture: ")
-                    elif current_addition_state == 8:
-                        current_addition_list[6] = [int(input("type: ")), int(input("poison type: ")), int(input("application: ")), float(input("damage: ")), int(input("poison ticks: ")), int(input("attack calculation: "))]
-                        current_addition_list[8] = int(input("max time: "))
-                        current_addition_list[9] = float(input("attack modifier: "))
-                        current_addition_list[10] = float(input("acurracy modifier: "))
-                        current_addition_list[11] = [float(input("minimum random multiplier: ")), float(input("minimum random multiplier: "))]
-                        current_addition_list[12] = [input("add effect: "), input("exist effect: "), input("remove effect: "), input("hit effect: ")]
                     elif current_addition_state == 9:
                         current_addition_list[14][4] = math.atan2(mouse_pos[1] - current_addition_list[1] - 305, mouse_pos[0] - current_addition_list[0] - 305)
                         if keysHeld["z"]:
                             current_addition_list[14][4] *= 4 / PI
                             current_addition_list[14][4] = int(round(current_addition_list[14][4]))
                             current_addition_list[14][4] *= PI / 4
+                    elif mouseDown[1]:
+                        if current_addition_state == 6:
+                            current_addition_list[13] = [int(input("red: ")), int(input("green: ")), int(input("blue: "))]
+                        elif current_addition_state == 7:
+                            current_addition_list[7] = input("texture: ")
+                        elif current_addition_state == 8:
+                            current_addition_list[6] = [int(input("type: ")), int(input("poison type: ")),
+                                                        int(input("application: ")), float(input("damage: ")),
+                                                        int(input("poison ticks: ")), int(input("attack calculation: "))]
+                            current_addition_list[8] = int(input("max time: "))
+                            current_addition_list[9] = float(input("attack modifier: "))
+                            current_addition_list[10] = float(input("acurracy modifier: "))
+                            current_addition_list[11] = [float(input("minimum random multiplier: ")),
+                                                         float(input("minimum random multiplier: "))]
+                            current_addition_list[12] = [input("add effect: "), input("exist effect: "),
+                                                         input("remove effect: "), input("hit effect: ")]
 
                 elif mouseDown[3]:
                     if current_addition_state in (3, 4):
@@ -1273,6 +1301,7 @@ try:
                             print(current_addition_list[i + 2][1][j])
 
             if keysDown["space"]:
+                Battle.running_battle = True
                 if current_addition_mode == 1:
                     Battle.Projectile(*current_addition_list)
                     main_add_to_frame(Battle.current_battle_frame, ["projectile", *current_addition_list])
@@ -1286,7 +1315,6 @@ try:
                     main_add_to_frame(Battle.current_battle_frame, {current_addition_list[0]: dict(current_addition_list[1:])})
                 elif current_addition_mode in (5, 6):
                     temp_frame = int(Battle.current_battle_frame)
-                    Battle.running_battle = True
                     main_add_to_frame(current_addition_list[0], dict(current_addition_list[1:]))
                     Battle.init_battle(main_battle_dict)
                     Battle.current_battle_frame = -1
@@ -1294,7 +1322,7 @@ try:
                     Battle.Projectile.projectile_list = []
                     for i in range(temp_frame + 1):
                         proceed_frame()
-                    Battle.running_battle = False
+                Battle.running_battle = False
 
                 current_addition_mode = 0
 
@@ -1350,6 +1378,9 @@ try:
             temp_main_list = [""]
             current_addition_state = 0
             rect_middle = [295, 195]
+
+        elif mouseDown[3]:
+            left_click_create([mouse_pos[0] - 305, mouse_pos[1] - 305])
 
         elif keysDown["s"]:
             temp_input = int(input("addition mode: "))
