@@ -2,7 +2,7 @@
 
 this is a very simple and crude game that can be also used as a game engine, though the user interface for making content is not intuitive.
 
-this repository includes both the game, which is missing a bunch of content, and the tools that I built that were used to create it. The systems themselves of the game + tools are mostly done, but they are not very user friendly nor are they coded with good practices in mind as I started the project eons ago and just built upon it with minor changes.
+this repository includes both the game, which is missing a bunch of content, and the tools that I built that were used to create it. The systems themselves of the game + tools are mostly done, but they are not very user friendly nor are they coded with good practices in mind as I started the project eons ago and just built upon it without fixing too many past mistakes.
 
 ## The Game
 
