@@ -1,3 +1,5 @@
+looking back on the code i feel betrayed by my past self. anyways i was like 16 when i did this so dont be harsh <3
+
 # Blank
 
 this is a very simple and crude game that can be also used as a game engine, though the user interface for making content is not intuitive.
