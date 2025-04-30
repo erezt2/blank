@@ -1,4 +1,4 @@
-looking back on the code i feel betrayed by my past self. anyways i was like 16 when i did this so dont be harsh <3
+looking back on the code i feel betrayed by my past self. anyways this was my first projected that i started when i was like 14 and 2 years later it was too late to change all the bad practices, so dont be harsh <3
 
 # Blank
 
